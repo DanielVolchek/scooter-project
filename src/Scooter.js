@@ -19,18 +19,6 @@ class Scooter {
     this.user = null;
   }
 
-  recharge() {
-    const rechargeIntervalInMS = 500;
-    const interval = setInterval(() => {
-      this.charge = Math.min(100, this.charge + 10);
-      console.log(`Scooter is charging. Current charge: ${this.charge}`);
-      if (this.charge === 100) {
-        clearInterval(interval);
-        console.log("Scooter is fully charged.");
-      }
-    }, rechargeIntervalInMS);
-  }
-
   requestRepair() {
     // repair in 5 seconds
     const repairTimeInMS = 5 * 1000;
@@ -40,7 +28,18 @@ class Scooter {
       console.log("repair completed");
     }, repairTimeInMS);
   }
-  // scooter code here
+
+  recharge() {
+    const rechargeIntervalInMS = 1000;
+    const interval = setInterval(() => {
+      this.charge = Math.min(100, this.charge + 10);
+      console.log(`Scooter is charging. Current charge: ${this.charge}`);
+      if (this.charge === 100) {
+        clearInterval(interval);
+        console.log("Scooter is fully charged.");
+      }
+    }, rechargeIntervalInMS);
+  }
 }
 
 module.exports = Scooter;
