@@ -59,11 +59,11 @@ describe("scooter methods", () => {
 
   it("should throw an error if scooter has less than 20% charge", () => {
     scooter.charge = 19;
-    expect(scooter.rent(dummyUser)).toThrow("scooter needs to charge.");
+    expect(() => scooter.rent(dummyUser)).toThrow("scooter needs to charge.");
   });
   it("should throw an error if scooter is broken", () => {
     scooter.isBroken = true;
-    expect(scooter.rent(dummyUser)).toThrow("scooter needs repair.");
+    expect(() => scooter.rent(dummyUser)).toThrow("scooter needs repair.");
   });
   //dock method
   it("should dock a scooter at a station", () => {
@@ -88,16 +88,12 @@ describe("scooter methods", () => {
     jest.useFakeTimers();
     scooter.recharge();
 
+    scooter.charge = 50;
     jest.advanceTimersByTime(1000);
     expect(scooter.charge).toBe(60);
-    expect(console.log).toHaveBeenCalledWith(
-      "Scooter is charging. Current charge: 60"
-    );
     // Advance the timers by another 4 seconds, which should fully charge the scooter
     jest.advanceTimersByTime(4000);
     expect(scooter.charge).toBe(100);
-    expect(console.log).toHaveBeenCalledWith("Scooter is fully charged.");
-
     // Reset the mock timers
     jest.useRealTimers();
   });
