@@ -1,13 +1,45 @@
-const User = require('../src/User')
+const User = require("../src/User");
 
 // User tests here
+describe("User tests", () => {
+  let testUser;
+  beforeEach(() => {
+    testUser = new User("testuser", "testpass", 18);
+  });
+  describe("User object", () => {
+    it("should be of type object", () => {
+      expect(typeof testUser).toBe("object");
+    });
 
-// test username
+    it("should have a username", () => {
+      expect(testUser.username).toBeDefined();
+      expect(testUser.username).toBe("testuser");
+    });
 
-// test password
+    it("should have a password", () => {
+      expect(testUser.password).toBeDefined();
+      expect(testUser.password).toBe("testpass");
+    });
 
-// test age
+    it("should have an age", () => {
+      expect(testUser.age).toBeDefined();
+      expect(testUser.age).toBe(18);
+    });
+  });
+  describe("User methods", () => {
+    it("should be able to login with correct password", () => {
+      expect(testUser.login("testpass")).toBe(true);
+      expect(testUser.loggedIn).toBe(true);
+    });
 
-// test login
+    it("should throw with an incorrect password", () => {
+      expect(() => testUser.login("wrongpass")).toThrow("incorrect password");
+    });
 
-// test logout
+    it("should be able to logout", () => {
+      testUser.loggedIn = true;
+      testUser.logout();
+      expect(testUser.loggedIn).toBe(false);
+    });
+  });
+});
