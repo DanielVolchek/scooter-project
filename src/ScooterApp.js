@@ -30,14 +30,16 @@ class ScooterApp {
   registerUser(username, password, age) {
     if (age < 18) throw new Error("too young to register");
     if (this.registeredUsers[username]) throw new Error("already registered");
-
+    console.log("user registered");
     this.registeredUsers[username] = new User(username, password, age);
+    return this.registeredUsers[username];
   }
 
   loginUser(username, password) {
     const user = this.registeredUsers[username];
     if (!user || !user.login(password))
       throw new Error("Username or password is incorrect");
+    return true;
   }
 
   logoutUser(username) {
@@ -50,6 +52,7 @@ class ScooterApp {
     const station = this.stations[station];
     if (!station) throw new Error("no such station");
     this.stations[station].push(new Scooter(station));
+    return this.stations[station][station.length - 1];
   }
 
   dockScooter(scooter, station) {
