@@ -87,7 +87,6 @@ describe("scooter methods", () => {
   it("should recharge the scooter and log status messages", () => {
     jest.useFakeTimers();
     scooter.recharge();
-
     scooter.charge = 50;
     jest.advanceTimersByTime(1000);
     expect(scooter.charge).toBe(60);
