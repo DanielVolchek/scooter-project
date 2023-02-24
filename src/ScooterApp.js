@@ -47,7 +47,7 @@ class ScooterApp {
 
   logoutUser(username) {
     const user = this.registeredUsers[username];
-    if (!user) throw new Error("no such user is logged in");
+    if (!user || !user.loggedIn) throw new Error("no such user is logged in");
     user.logout();
   }
 

@@ -71,12 +71,17 @@ describe("ScooterApp Method tests", () => {
   });
 
   it("should be able to logout a user", () => {
+    app.loginUser(dummyUser.username, dummyUser.password);
+    expect(app.registeredUsers[dummyUser.username].loggedIn).toBe(true);
     app.logoutUser(dummyUser.username);
     expect(app.registeredUsers[dummyUser.username].loggedIn).toBe(false);
   });
 
   it("should throw an error if user is not registered or logged in", () => {
     expect(() => app.logoutUser("nosuchuser")).toThrow(
+      "no such user is logged in"
+    );
+    expect(() => app.logoutUser(dummyUser)).toThrow(
       "no such user is logged in"
     );
   });
