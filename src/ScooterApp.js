@@ -37,8 +37,11 @@ class ScooterApp {
 
   loginUser(username, password) {
     const user = this.registeredUsers[username];
-    if (!user || !user.login(password))
+    try {
+      user.login(password);
+    } catch (e) {
       throw new Error("Username or password is incorrect");
+    }
     return true;
   }
 
@@ -48,15 +51,15 @@ class ScooterApp {
     user.logout();
   }
 
-  createScooter(station) {
-    const station = this.stations[station];
+  createScooter(station_name) {
+    const station = this.stations[station_name];
     if (!station) throw new Error("no such station");
-    this.stations[station].push(new Scooter(station));
-    return this.stations[station][station.length - 1];
+    station.push(new Scooter(station));
+    return station[station.length - 1];
   }
 
-  dockScooter(scooter, station) {
-    const station = this.stations[station];
+  dockScooter(scooter, station_name) {
+    const station = this.stations[station_name];
     if (!station) throw new Error("no such station");
     if (station.includes(scooter))
       throw new Error("scooter already at station");
@@ -66,6 +69,7 @@ class ScooterApp {
 
   rentScooter(scooter, user) {
     if (scooter.user !== null) throw new Error("scooter already rented");
+    const index = this.stations[scooter.station].indexOf(scooter);
     this.stations[scooter.station].splice(index, 1);
     scooter.rent(user);
     console.log("scooter is rented");

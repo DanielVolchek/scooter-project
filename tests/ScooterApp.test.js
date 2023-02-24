@@ -47,7 +47,7 @@ describe("ScooterApp Method tests", () => {
   });
 
   it("should throw an error if user is already registered", () => {
-    const user1 = new User("test2", "test2", 17);
+    const user1 = new User(dummyUser.username, "test2", 18);
     expect(() =>
       app.registerUser(user1.username, user1.password, user1.age)
     ).toThrow("already registered");
@@ -65,7 +65,7 @@ describe("ScooterApp Method tests", () => {
   });
 
   it("should throw an error if password is incorrect", () => {
-    expect(() => app.loginUser(dummUser.username, "wrongpassword")).toThrow(
+    expect(() => app.loginUser(dummyUser.username, "wrongpassword")).toThrow(
       "Username or password is incorrect"
     );
   });
@@ -87,14 +87,14 @@ describe("ScooterApp Method tests", () => {
   });
 
   it("should throw an error if station does not exist", () => {
-    expect(() => app.createScooter("no such station")).toThrow(
-      "no such station exists"
+    expect(() => app.createScooter("notrealstation")).toThrow(
+      "no such station"
     );
   });
 
   it("should be able to dock a scooter", () => {
     expect(() =>
-      app.dockScooter(createScooter("London"), "New York")
+      app.dockScooter(app.createScooter("London"), "New York")
     ).not.toThrow();
   });
 
@@ -104,7 +104,7 @@ describe("ScooterApp Method tests", () => {
 
   it("should throw an error if scooter is already docked", () => {
     expect(() =>
-      app.dockScooter(createScooter("New York"), "New York")
+      app.dockScooter(app.createScooter("New York"), "New York")
     ).toThrow("scooter already at station");
   });
 
@@ -116,8 +116,10 @@ describe("ScooterApp Method tests", () => {
 
   it("should throw an error if scooter is already rented", () => {
     const dummy2 = app.registerUser("dummy2", "dummy2", 18);
-    app.rentScooter(app.stations["New York"][0], dummyUser);
-    expect(() => app.rentScooter(app.stations["New York"][0], dummy2)).toThrow(
+    const scooter = app.stations["New York"][0];
+    app.rentScooter(scooter, dummyUser);
+    console.log(scooter);
+    expect(() => app.rentScooter(scooter, dummy2)).toThrow(
       "scooter already rented"
     );
   });
